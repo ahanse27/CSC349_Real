@@ -93,4 +93,5 @@ public class DiGraphTest {
         System.out.println("- print graph (enter p)");
         System.out.println("- Quit (enter q)");
     }
+    
 }
