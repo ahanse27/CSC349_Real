@@ -13,9 +13,9 @@ public class DiGraph {
         int distance;
         int predecessor;
 
-        VertexInfo() {
-            this.distance = -1;
-            this.predecessor = -1;
+        VertexInfo(int distance, int predecessor) {
+            this.distance = distance;
+            this.predecessor = predecessor;
         }
     }
     private ArrayList<LinkedList<Integer>> graph;                   //private Linked list array
@@ -154,7 +154,6 @@ public class DiGraph {
             VA[u].predecessor = -1;
         }
         VA[s].distance = 0;
-
         queue.addLast(s);
         while (!queue.isEmpty()){
             int w = queue.removeFirst();
@@ -170,30 +169,31 @@ public class DiGraph {
     }
 
     public boolean isTherePath(int from, int to){
-        VertexInfo[] path = BFS(from);
-        VertexInfo current = path[to];
-        boolean reachable = false;
+        VertexInfo[] VA = BFS(from);
+        if(VA[to].distance != -1){
+            return true;
+        }
 
-        return reachable;
+        return false;
     }
 
     public int lengthOfPath(int from, int to){
-        VertexInfo[] pathLength = BFS(from);
+        VertexInfo[] VA = BFS(from);
 
-        return pathLength[to].distance;
+        return VA[to].distance;
     }
 
     public void printPath(int from, int to){
-        VertexInfo[] shortestPath = BFS(from);
+        VertexInfo[] VA = BFS(from);
 
-        if (shortestPath[to].distance == -1){
+        if (VA[to].distance == -1){
             System.out.println("There is no path");
         }
         else{
             String output ="";
             while(from != to){
                 output = "->" + to + output;
-                to = shortestPath[to].predecessor;
+                to = VA[to].predecessor;
             }
             output = from + output;
             System.out.println(output);
