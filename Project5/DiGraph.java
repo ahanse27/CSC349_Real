@@ -9,6 +9,15 @@ import java.util.LinkedList;
 
 public class DiGraph {
 
+    private static class VertexInfo {
+        int distance;
+        int predecessor;
+
+        VertexInfo() {
+            this.distance = -1;
+            this.predecessor = -1;
+        }
+    }
     private ArrayList<LinkedList<Integer>> graph;                   //private Linked list array
     private int N;
 
@@ -123,11 +132,72 @@ public class DiGraph {
                 if(inds[v] == 0) {
                     queue.addLast(v);
                 }
-            }            
+            }
         }
+
+        //IllegalArgumentException();
         if(i != A.length){
             throw new IllegalArgumentException("This is a Cyclic Graph");
         }
+
         return A;
+    }
+
+    /************************ Pt 3 ************************/
+
+    private VertexInfo[] BFS(int s){
+        int N = this.graph.size();
+        VertexInfo[] VA = new VertexInfo[N];
+        LinkedList<Integer> queue = new LinkedList<>();
+        for (int u = 0; u < N; u++){
+            VA[u].distance = -1;
+            VA[u].predecessor = -1;
+        }
+        VA[s].distance = 0;
+
+        queue.addLast(s);
+        while (!queue.isEmpty()){
+            int w = queue.removeFirst();
+            for (int v = 0; v < graph.get(w).size(); v++){
+                if (VA[v].distance == -1){
+                    VA[v].distance = VA[w].distance + 1;
+                    VA[v].predecessor = w;
+                    queue.addLast(v);
+                }
+            }
+        }
+        return VA;
+    }
+
+    public boolean isTherePath(int from, int to){
+        VertexInfo[] path = BFS(from);
+        VertexInfo current = path[to];
+        boolean reachable = false;
+
+        return reachable;
+    }
+
+    public int lengthOfPath(int from, int to){
+        VertexInfo[] pathLength = BFS(from);
+
+        return pathLength[to].distance;
+    }
+
+    public void printPath(int from, int to){
+        VertexInfo[] shortestPath = BFS(from);
+
+        if (shortestPath[to].distance == -1){
+            System.out.println("There is no path");
+        }
+        else{
+            String output ="";
+            while(from != to){
+                output = "->" + to + output;
+                to = shortestPath[to].predecessor;
+            }
+            output = from + output;
+            System.out.println(output);
+        }
+
     }
 }
