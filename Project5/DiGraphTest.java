@@ -1,9 +1,8 @@
-
 /*
  * Names: Alexa Hansen (ahanse27), Lily Alvarado (aalva129)
  * Class: CPE 349
- * Assignment: Project 5 Pt 1 & 2
- * Date: 07/20/2022
+ * Assignment: Project 5 Pt 3 & 4
+ * Date: 07/22/2022
  */
 import java.util.Scanner;
 import java.util.LinkedList;
@@ -40,7 +39,6 @@ public class DiGraphTest {
                         to = sc.nextInt();
                         sc.nextLine();
                         graph.addEdge(from, to);                                        /* call addEdge with user input values */
-                        //System.out.println("Added Edge: From: " + from + " To: " + to);
                         break;
                     case "d":
                         System.out.println("Input the starting edge value to and ending edge value separated by a space");
@@ -48,7 +46,6 @@ public class DiGraphTest {
                         to = sc.nextInt();
                         sc.nextLine();
                         graph.deleteEdge(from, to);                                        /* call deleteEdge with user input values */
-                       //System.out.println("Deleted Edge: From: " + from + " To: " + to);
                         break;
                     case "e":
                         System.out.println("Number of edges is: " + graph.edgeCount());
@@ -72,10 +69,52 @@ public class DiGraphTest {
                             System.out.print("" + sort[i] + ", ");
                         }
                         System.out.println("" + sort[i]);
-                    }catch(IllegalArgumentException e){
-                        System.out.println(e.getMessage());
-                    }
-                    break;
+                        }catch(IllegalArgumentException e){
+                            System.out.println(e.getMessage());
+                        }
+                        break;
+                    case "i":
+                        System.out.println("Input the starting edge value and ending edge value separated by a space");
+                        from = sc.nextInt();
+                        to = sc.nextInt();
+                        sc.nextLine();
+                        boolean pathExists = graph.isTherePath(from, to);
+                        if(pathExists){
+                            System.out.println("A path exists from " + from + " to " + to + ".");
+                        }
+                        else{
+                            System.out.println("A path does not exist from " + from + " to " + to + ".");
+                        }
+                        break;
+                    case "l":
+                        System.out.println("Input the starting edge value and ending edge value separated by a space");
+                        from = sc.nextInt();
+                        to = sc.nextInt();
+                        sc.nextLine();
+                        int pathLength = graph.lengthOfPath(from, to);
+                        System.out.println("The length of the path from " + from + " to " + to + " is " + pathLength + ".");
+                        break;
+                    case "s":
+                        System.out.println("Input the starting edge value and ending edge value separated by a space.");
+                        from = sc.nextInt();
+                        to = sc.nextInt();
+                        sc.nextLine();
+                        boolean pathExistPrint = graph.isTherePath(from, to);
+                        if(pathExistPrint){
+                            System.out.println("The shortest path is: ");
+                            graph.printPath(from, to);
+                        }
+                        else{
+                            System.out.println("A path does not exists from " + from + " to " + to + ".");
+                        }
+                        break;
+                    case "b":
+                        System.out.println("Input the source vertex number.");
+                        int source = sc.nextInt();
+                        sc.nextLine();
+                        System.out.println("The Breadth-First-Tree for " + source + " is:");
+                        graph.printTree(source);
+                        break;
                     default:
                         System.out.println("Invalid choice has been entered, please enter a valid option.");
                 }
@@ -92,6 +131,11 @@ public class DiGraphTest {
         System.out.println("- vertex count (enter v)");
         System.out.println("- print graph (enter p)");
         System.out.println("- Quit (enter q)");
+        System.out.println("- Topological Sort (enter t)");
+        System.out.println("- Is There a Path? (enter i)");
+        System.out.println("- Length of Path (enter l)");
+        System.out.println("- Print Shortest Path (enter s)");
+        System.out.println("- Breadth-First-Tree (enter b)");
     }
     
 }
