@@ -206,12 +206,12 @@ public class DiGraph {
 
     /* Prints shortest path */
     public void printPath(int from, int to){
-        int k = to - 1;
-        VertexInfo[] VA = BFS(from - 1);
 
         if(isTherePath(from, to)){
+            int k = to - 1;
+            VertexInfo[] VA = BFS(from - 1);
             String output = "";
-            while(VA[k].predecessor != 1){
+            while(VA[k].predecessor != -1){
                 output = "->" + (k + 1) + output;
                 k = VA[k].predecessor;
             }
