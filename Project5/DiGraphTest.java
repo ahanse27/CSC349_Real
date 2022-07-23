@@ -20,7 +20,6 @@ public class DiGraphTest {
 
         System.out.println();
         printSwitchMenu();
-        //System.out.println();
 
         do{
             int from, to;
@@ -58,12 +57,9 @@ public class DiGraphTest {
                         System.out.println("The graph is the following: ");
                         graph.print();
                         break;
-                    case "q":
-                        switchFinish = true;
-                        System.out.println("Program has ended. Goodbye.");
-                        break;
                     case "t":
                         try{
+                            System.out.println("Topological sorting...");
                             int[] sort = graph.topSort();
                             int i;
                             for(i = 0; i < graph.vertexCount() - 1; i++){
@@ -116,6 +112,10 @@ public class DiGraphTest {
                         System.out.println("The Breadth-First-Tree for " + source + " is:");
                         graph.printTree(source);
                         break;
+                    case "q":
+                        switchFinish = true;
+                        System.out.println("Program has ended. Goodbye.");
+                        break;
                     default:
                         System.out.println("Invalid choice has been entered, please enter a valid option.");
                 }
@@ -126,11 +126,11 @@ public class DiGraphTest {
 
     private static void printSwitchMenu(){
         System.out.println("Choose one of the following operations: ");
-        System.out.println("- add edge (enter a)");
-        System.out.println("- delete edge (enter d)");
-        System.out.println("- edge count (enter e)");
-        System.out.println("- vertex count (enter v)");
-        System.out.println("- print graph (enter p)");
+        System.out.println("- Add edge (enter a)");
+        System.out.println("- Delete edge (enter d)");
+        System.out.println("- Edge count (enter e)");
+        System.out.println("- Vertex count (enter v)");
+        System.out.println("- Print graph (enter p)");
         System.out.println("- Topological Sort (enter t)");
         System.out.println("- Is There a Path? (enter i)");
         System.out.println("- Length of Path (enter l)");
