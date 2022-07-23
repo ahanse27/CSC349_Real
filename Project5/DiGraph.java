@@ -27,7 +27,7 @@ public class DiGraph {
             this.list = list;
         }
     }
-    
+
 
     private ArrayList<LinkedList<Integer>> graph;                   //private Linked list array
     private int N;
@@ -165,7 +165,8 @@ public class DiGraph {
         queue.addLast(s);
         while (!queue.isEmpty()){
             int w = queue.removeFirst();
-            for (int v = 0; v < graph.get(w).size(); v++){
+            for (int t = 0; t < graph.get(w).size(); t++){
+                int v = graph.get(w).get(t);
                 if (VA[v].distance == -1){
                     VA[v].distance = VA[w].distance + 1;
                     VA[v].predecessor = w;
@@ -182,19 +183,29 @@ public class DiGraph {
         if(VA[to - 1].distance != -1){   /* if predecessor for to exists */
             return true;
         }
-        return false;
+        else
+            return false;
     }
 
     /* returns the shortest distance from the to and from vertices */
     public int lengthOfPath(int from, int to){      /* only returning 0 for path length */
+        int length = 0;
         VertexInfo[] VA = BFS(from);
+        if (!isTherePath(from, to)){
+            length = -1;
+            return length;
+        }
+        while (VA[to].predecessor != -1){
+            length++;
+            //increament while loop to change
+        }
 
-        return VA[to - 1].distance;
+        return length;
     }
 
     /* Prints shortest path */
     public void printPath(int from, int to){
-        
+
         VertexInfo[] VA = BFS(from);
 
         if (VA[to].distance == -1){
@@ -217,9 +228,9 @@ public class DiGraph {
     /* Returns the root of the BF Tree for given s vertex */
     private TreeNode buildTree(int s){
         int N = this.graph.size();
-        VertexInfo[] VA = BFS(s - 1);
+        VertexInfo[] VA = BFS(s - 1); //(s)
         TreeNode[] treeNodes = new TreeNode[N];
-        for(int i = 0; i < N; i++){
+        for(int i = 0; i < N; i++){              // i not i + 1?
             treeNodes[i] = new TreeNode(i + 1, new LinkedList<TreeNode>());
         }
         for(int j = 0; j < VA.length; j++){
