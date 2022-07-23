@@ -179,7 +179,7 @@ public class DiGraph {
 
     /* Returns true if path exists */
     public boolean isTherePath(int from, int to){
-        VertexInfo[] VA = BFS(from);
+        VertexInfo[] VA = BFS(from - 1);
         if(VA[to - 1].distance != -1){   /* if predecessor for to exists */
             return true;
         }
@@ -190,35 +190,35 @@ public class DiGraph {
     /* returns the shortest distance from the to and from vertices */
     public int lengthOfPath(int from, int to){      /* only returning 0 for path length */
         int length = 0;
-        VertexInfo[] VA = BFS(from);
+        int k = to - 1;
+        VertexInfo[] VA = BFS(from - 1);
         if (!isTherePath(from, to)){
-            length = -1;
-            return length;
+            return -1;
         }
-        while (VA[to].predecessor != -1){
+        while(VA[k].predecessor != -1){
             length++;
             //increament while loop to change
+            k = VA[k].predecessor;
         }
-
         return length;
+        //return VA[to - 1].distance;
     }
 
     /* Prints shortest path */
     public void printPath(int from, int to){
+        int k = to - 1;
+        VertexInfo[] VA = BFS(from - 1);
 
-        VertexInfo[] VA = BFS(from);
-
-        if (VA[to].distance == -1){
-            System.out.println("There is no path");
+        if(isTherePath(from, to)){
+            String output = "";
+            while(VA[k].predecessor != 1){
+                output = "->" + (k + 1) + output;
+                k = VA[k].predecessor;
+            }
+            System.out.println("" + (k + 1) + output);
         }
         else{
-            String output ="";
-            while(from != to){
-                output = "->" + to + output;
-                to = VA[to].predecessor;
-            }
-            output = from + output;
-            System.out.println(output);
+            System.out.println("There is no path");
         }
 
     }
