@@ -1,23 +1,34 @@
 /*
  * Names: Alexa Hansen (ahanse27), Lily Alvarado (aalva129)
  * Class: CPE 349
- * Assignment: Project 5 Pt 1 & 2
- * Date: 07/20/2022
+ * Assignment: Project 5 Pt 3 & 4
+ * Date: 07/23/2022
  */
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class DiGraph {
 
-    private static class VertexInfo {
+    /* Pt 3 private nested class, 2 variables */
+    private class VertexInfo {
         int distance;
         int predecessor;
-
-        VertexInfo(int distance, int predecessor) {
+        public VertexInfo(int distance, int predecessor) {
             this.distance = distance;
             this.predecessor = predecessor;
         }
     }
+    /* Pt 4 private nested class */
+    private class TreeNode{
+        int numVertex;
+        LinkedList<TreeNode> list;
+        public TreeNode(int numVertex, LinkedList<TreeNode> list){
+            this.numVertex = numVertex;
+            this.list = list;
+        }
+    }
+    
+
     private ArrayList<LinkedList<Integer>> graph;                   //private Linked list array
     private int N;
 
@@ -134,24 +145,21 @@ public class DiGraph {
                 }
             }
         }
-
-        //IllegalArgumentException();
         if(i != A.length){
             throw new IllegalArgumentException("This is a Cyclic Graph");
         }
-
         return A;
     }
 
-    /************************ Pt 3 ************************/
+    /************************ Pt 3 Functions ************************/
 
+    /* Returns data that can be used to construct shortest path */
     private VertexInfo[] BFS(int s){
         int N = this.graph.size();
         VertexInfo[] VA = new VertexInfo[N];
-        LinkedList<Integer> queue = new LinkedList<>();
+        LinkedList<Integer> queue = new LinkedList<Integer>();
         for (int u = 0; u < N; u++){
-            VA[u].distance = -1;
-            VA[u].predecessor = -1;
+            VA[u] = new VertexInfo(-1, -1);             /* initialize all values*/
         }
         VA[s].distance = 0;
         queue.addLast(s);
@@ -168,22 +176,25 @@ public class DiGraph {
         return VA;
     }
 
+    /* Returns true if path exists */
     public boolean isTherePath(int from, int to){
         VertexInfo[] VA = BFS(from);
-        if(VA[to].distance != -1){
+        if(VA[to - 1].distance != -1){   /* if predecessor for to exists */
             return true;
         }
-
         return false;
     }
 
-    public int lengthOfPath(int from, int to){
+    /* returns the shortest distance from the to and from vertices */
+    public int lengthOfPath(int from, int to){      /* only returning 0 for path length */
         VertexInfo[] VA = BFS(from);
 
-        return VA[to].distance;
+        return VA[to - 1].distance;
     }
 
+    /* Prints shortest path */
     public void printPath(int from, int to){
+        
         VertexInfo[] VA = BFS(from);
 
         if (VA[to].distance == -1){
@@ -200,4 +211,38 @@ public class DiGraph {
         }
 
     }
+
+    /************************ Pt 4 Functions ************************/
+
+    /* Returns the root of the BF Tree for given s vertex */
+    private TreeNode buildTree(int s){
+        int N = this.graph.size();
+        VertexInfo[] VA = BFS(s - 1);
+        TreeNode[] treeNodes = new TreeNode[N];
+        for(int i = 0; i < N; i++){
+            treeNodes[i] = new TreeNode(i + 1, new LinkedList<TreeNode>());
+        }
+        for(int j = 0; j < VA.length; j++){
+            if(VA[j].predecessor != -1){
+                treeNodes[VA[j].predecessor].list.add(treeNodes[j]);
+            }
+        }
+        return treeNodes[s -1];
+    }
+
+    /* Prints the Breadth-First Tree for given s */
+    public void printTree(int s){
+        TreeNode root = buildTree(s);
+        recursiveTree(root, "");
+    }
+
+    private void recursiveTree(TreeNode s, String tabs){
+        System.out.println(tabs + s.numVertex);
+        if(s.list.size() > 0){
+            for(int i = 0; i < s.list.size(); i++){
+                recursiveTree(s.list.get(i), tabs + "    ");
+            }
+        }
+    }
+
 }
