@@ -226,9 +226,9 @@ public class DiGraph {
     /* Returns the root of the BF Tree for given s vertex */
     private TreeNode buildTree(int s){
         int N = this.graph.size();
-        VertexInfo[] VA = BFS(s - 1); //(s)
+        VertexInfo[] VA = BFS(s - 1);
         TreeNode[] treeNodes = new TreeNode[N];
-        for(int i = 0; i < N; i++){              // i not i + 1?
+        for(int i = 0; i < N; i++){
             treeNodes[i] = new TreeNode(i + 1, new LinkedList<TreeNode>());
         }
         for(int j = 0; j < VA.length; j++){
