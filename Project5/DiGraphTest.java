@@ -2,7 +2,7 @@
  * Names: Alexa Hansen (ahanse27), Lily Alvarado (aalva129)
  * Class: CPE 349
  * Assignment: Project 5 Pt 3 & 4
- * Date: 07/22/2022
+ * Date: 07/23/2022
  */
 import java.util.Scanner;
 import java.util.LinkedList;
@@ -138,5 +138,4 @@ public class DiGraphTest {
         System.out.println("- Breadth-First-Tree (enter b)");
         System.out.println("- Quit (enter q)");
     }
-
 }
