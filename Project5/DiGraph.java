@@ -158,14 +158,14 @@ public class DiGraph {
         int N = this.graph.size();
         VertexInfo[] VA = new VertexInfo[N];
         LinkedList<Integer> queue = new LinkedList<Integer>();
-        for (int u = 0; u < N; u++){
+        for(int u = 0; u < N; u++){
             VA[u] = new VertexInfo(-1, -1);             /* initialize all values*/
         }
         VA[s].distance = 0;
         queue.addLast(s);
         while (!queue.isEmpty()){
             int w = queue.removeFirst();
-            for (int t = 0; t < graph.get(w).size(); t++){
+            for(int t = 0; t < graph.get(w).size(); t++){
                 int v = graph.get(w).get(t);
                 if (VA[v].distance == -1){
                     VA[v].distance = VA[w].distance + 1;
@@ -192,7 +192,7 @@ public class DiGraph {
         int length = 0;
         int k = to - 1;
         VertexInfo[] VA = BFS(from - 1);
-        if (!isTherePath(from, to)){
+        if (!isTherePath(from, to)){    /* if path is not reachable */
             return -1;
         }
         while(VA[k].predecessor != -1){
@@ -201,7 +201,6 @@ public class DiGraph {
             k = VA[k].predecessor;
         }
         return length;
-        //return VA[to - 1].distance;
     }
 
     /* Prints shortest path */
