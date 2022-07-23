@@ -34,7 +34,6 @@ public class DiGraph {
 
     public DiGraph(int N) {                                         //constructor (int N)
         this.N = N;
-        System.out.println("DiGraph constructor initialized");
         this.graph = new ArrayList<>(N);         //create variable array
 
         for (int i = 0; i < N; i++) {                               //initialize array
